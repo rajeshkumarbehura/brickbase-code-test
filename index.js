@@ -1,8 +1,8 @@
 const express = require('express');
 //const mongoose = require('mongoose');
 const cors = require('cors');
-const eventRoutes = require('./routes/events');
-const db = require('./config/db');
+const eventRoutes = require('./src/routes/events');
+const db = require('./src/config/db');
 const bodyParser = require('body-parser');
 
 const app = express();
