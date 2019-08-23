@@ -1,67 +1,107 @@
 const Event = require('../models/Events');
 
-module.exports = {
-  addEvent: async (req, res) => {
+const self = module.exports = {
 
+    addEvent: async (request, response) => {
 
-    dateStart.setTime(
-      dateStart.getTime() - new Date().getTimezoneOffset() * 60 * 1000,
-    );
-    data.start = dateStart;
+        /* let eventData = {
+             end: 1567268130000,
+             start: 1567257330000,
+             timeZoneOffset: -450,
+             title: "Test Event",
+             details: "Testing Event Bangok Stadium",
+             location: {
+                 address: "1, bangok Street",
+                 latLng: {
+                     lat: 13.798159498972458,
+                     lng: 100.53689315915108,
+                 },
+             },
+         };
+        */
+        let eventModel = self.convertToModel(request.body);
 
-    const dateEnd = new Date(data.end);
-    dateEnd.setTime(
-      dateEnd.getTime() - new Date().getTimezoneOffset() * 60 * 1000,
-    );
+        let existingEvent = await Event.findOne({
+            $and: [
+                {
+                    'location.latLng.lng': eventModel.location.latLng.lng,
+                    'location.latLng.lat': eventModel.location.latLng.lat,
+                },
+                {start: {$gte: eventModel.start}},
+                {end: {$lte: eventModel.end}},
+            ],
+        });
 
-    data.end = dateEnd;
-    const existingEvent = await Event.findOne({
-      $and: [
-        {
-          'location.latLng.lng': data.location.latLng.lng,
-          'location.latLng.lat': data.location.latLng.lat,
-        },
-        {
-          [{ start: { $gte: data.start } }, { end: { $lte: data.end } }],
-        },
-      ],
-    });
+        if (existingEvent) {
+            response.status(500).json({
+                success: false,
+                message: 'An Event already exist at this venue on this day',
+                event: existingEvent
+            });
+        } else {
 
+            await eventModel.save()
+                .then((event) => {
+                    response.status(200).json({
+                        success: true,
+                        event,
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                    response.status(500).json({
+                        success: false,
+                        message: 'An Error Occured, please try again later',
+                    });
+                });
+        }
 
+    },
 
-    if (existingEvent) {
-      res.status(500).json({
-        success: false,
-        message: 'An Event already exist at this venue on this day',
-      });
-    } else {
-      Event.make(data)
-        .then((event) => {
-          res.status(200).json({
+    getAllEvents: async (req, res) => {
+        Event.find({})
+            .then((events) => {
+                res.json({success: true, events});
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json({
+                    success: false,
+                    message: 'An Error Occured, please try again later',
+                });
+            });
+    },
+
+    testEvent: (req, res) => {
+        res.status(200).json({
             success: true,
-            event,
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          res.status(500).json({
-            success: false,
-            message: 'An Error Occured, please try again later',
-          });
+            message: 'This is test message.',
         });
+    },
+
+
+    convertToModel: (request) => {
+        let eventModel = new Event();
+
+        const dateStart = new Date(request.start);
+        dateStart.setTime(
+            dateStart.getTime() - new Date().getTimezoneOffset() * 60 * 1000,
+        );
+        eventModel.start = dateStart;
+
+        const dateEnd = new Date(request.end);
+        dateEnd.setTime(
+            dateEnd.getTime() - new Date().getTimezoneOffset() * 60 * 1000,
+        );
+        eventModel.end = dateEnd;
+
+        //eventModel.end = request.data;
+        //eventModel.start = request.start;
+        eventModel.timeZoneOffset = new Date().getTimezoneOffset();
+        eventModel.title = request.title;
+        eventModel.details = request.details;
+        eventModel.location = request.location;
+        return eventModel;
     }
-  },
-  getAllEvents: (req, res) => {
-    Event.see({})
-      .then((events) => {
-        res.json({ success: true, events });
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json({
-          success: false,
-          message: 'An Error Occured, please try again later',
-        });
-      });
-  },
+
 };
