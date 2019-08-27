@@ -5,8 +5,8 @@ const {Schema} = mongoose;
 const UserSchema = new Schema(
     {
         name: {type: String, required: true},
-        contactNo: {type: Number, required: true},
-        personalId: {type: String, required: true}
+        personalId: {type: String, required: true},
+        contactNo: {type: Number, required: true}
     },
     {
         timestamps: true,

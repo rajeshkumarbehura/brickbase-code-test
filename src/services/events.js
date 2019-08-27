@@ -30,7 +30,7 @@ const EventService = {
 
         if (existingEvent) {
             responseData = responseDataUtil
-                .create(500, false, 'An Event already exist at this venue on this day', existingEvent);
+                .create(400, false, 'An Event already exist at this venue on this day', existingEvent);
 
         } else {
 

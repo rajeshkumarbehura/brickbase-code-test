@@ -22,22 +22,21 @@ describe('Event Controller Integration Testing.', function () {
         // close the db connection
         db.close(function () {
             console.log("connection is closed");
-            // kill the server
-            // process.exit(0);
             done();
+            // kill the server
+            process.exit(0);
         });
     });
 
     /*Case - Valid test api */
-    it('API - /api/v1/test', (done) => {
+    it('API - /api/v1/users/test', (done) => {
         chai.request(app)
-            .get('/api/v1/test')
+            .get('/api/v1/users/test')
             .end((err, res) => {
-                console.log('Response - ', res.body);
+                //console.log('Response - ', res.body);
                 res.should.have.status(200);
                 res.body.should.have.property('success').eq(true);
                 res.body.should.have.property('message').eq('This is test message.');
-                //   res.body.should.have.property('message').not(null);
                 done();
             });
     });
@@ -48,7 +47,7 @@ describe('Event Controller Integration Testing.', function () {
             .post('/api/v1/events')
             .send(sampleData.eventModel)
             .end((err, res) => {
-                console.log('****Response - ', res.body);
+                //console.log('Response - ', res.body);
                 res.should.have.status(200);
                 res.body.should.have.property('success').eq(true);
                 res.body.data.should.be.a('object');
@@ -77,8 +76,8 @@ describe('Event Controller Integration Testing.', function () {
                     .post('/api/v1/events')
                     .send(sampleData.eventModel)
                     .end((err, res) => {
-                        console.log('Response -> ', res.body);
-                        res.should.have.status(500);
+                        //console.log('Response -> ', res.body);
+                        res.should.have.status(400);
                         res.body.data._id.should.be.eql(existingEventId);
                         done();
                     });
@@ -94,12 +93,11 @@ describe('Event Controller Integration Testing.', function () {
             chai.request(app)
                 .get('/api/v1/events')
                 .end((err, res) => {
-                    console.log('****Response - ', res.body);
+                    //console.log('Response - ', res.body);
                     res.should.have.status(200);
                     res.body.should.have.property('success').eq(true);
                     res.body.should.have.property('data').a('array');
-                    //  res.body.should.have.property('data').a('array').length.should.be.eql(0);
-                    done();
+                     done();
                 });
         });
     });
@@ -113,12 +111,11 @@ describe('Event Controller Integration Testing.', function () {
             chai.request(app)
                 .get('/api/v1/events')
                 .end((err, res) => {
-                    console.log('****Response - ', res.body);
+                    //console.log('Response - ', res.body);
                     res.should.have.status(200);
                     res.body.should.have.property('success').eq(true);
                     res.body.should.have.property('data').a('array');
-                    //  res.body.should.have.property('data').a('array').length.should.be.eql(0);
-                    done();
+                     done();
                 });
         });
     });
