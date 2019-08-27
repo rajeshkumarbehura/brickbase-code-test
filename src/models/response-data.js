@@ -26,7 +26,6 @@ const ResponseDataUtil = {
     },
 
     updateResponse: (response, responseData) => {
-        console.log("response",responseData);
         let jsonData = {
             success: responseData.success,
             message: responseData.message

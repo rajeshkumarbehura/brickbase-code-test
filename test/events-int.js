@@ -123,5 +123,4 @@ describe('Event Controller Integration Testing.', function () {
         });
     });
 
-
 });

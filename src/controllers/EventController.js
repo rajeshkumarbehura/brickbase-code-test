@@ -1,4 +1,3 @@
-const Event = require('../models/Events');
 const eventService = require('../services/events');
 const responseDataUtil = require('../models/response-data');
 

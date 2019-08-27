@@ -1,3 +1,6 @@
+/**
+ *  Write the logic and database crud operation for Event goes here in Service Layer.
+ */
 const Event = require('../models/Events');
 const responseDataUtil = require('../models/response-data');
 
