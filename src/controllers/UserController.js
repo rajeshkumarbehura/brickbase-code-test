@@ -4,7 +4,7 @@ const responseDataUtil = require('../models/response-data');
 const userController = {
 
     /* Only for testing */
-    testEvent: (req, res) => {
+    testUser: (req, res) => {
         userService.test();
         res.status(200).json({
             success: true,

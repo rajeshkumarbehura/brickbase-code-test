@@ -1,11 +1,11 @@
 //Require the dev-dependencies
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let app = require('../index');
+let app = require('../../index');
 let should = chai.should();
-let db = require('../src/config/db');
-let event = require('../src/models/Events');
-let sampleData = require('../test/data/event-data');
+let db = require('../../src/config/db');
+let event = require('../../src/models/Events');
+let sampleData = require('../data/event-data');
 
 chai.use(chaiHttp);
 
@@ -29,9 +29,9 @@ describe('Event Controller Integration Testing.', function () {
     });
 
     /*Case - Valid test api */
-    it('API - /api/v1/users/test', (done) => {
+    it('API - /api/v1/events/test', (done) => {
         chai.request(app)
-            .get('/api/v1/users/test')
+            .get('/api/v1/events/test')
             .end((err, res) => {
                 //console.log('Response - ', res.body);
                 res.should.have.status(200);
