@@ -1,12 +1,10 @@
 //Require the dev-dependencies
 let chai = require('chai');
-let assert = require('chai').assert;
 let chaiHttp = require('chai-http');
 let app = require('../../index');
 let should = chai.should();
 let db = require('../../src/config/db');
 
-let Event = require('../../src/models/Events');
 let User = require('../../src/models/user');
 let userSampleData = require('../data/user-data');
 let eventSampleData = require('../data/event-data');
@@ -22,15 +20,7 @@ describe('Event Controller Integration Testing.', function () {
         });
     });
 
-    after((done) => {
-        // close the db connection
-        db.close(function () {
-            console.log("connection is closed");
-            done();
-            // kill the server
-            process.exit(0);
-        });
-    });
+
 
     it('GET - /api/v1/users-events?userId={}  find events by  User id.', (done) => {
         let userModel = userSampleData.userModel();
@@ -68,9 +58,9 @@ describe('Event Controller Integration Testing.', function () {
             .then(() => {
                 return userModel.save()
             })
-            .then((data) => {
+            .then((_userModel) => {
                 let event = eventSampleData.event();
-                event.userId = data._id.toString();
+                event.userId = _userModel._id.toString();
                 return event;
             })
             .then((event) => {
@@ -84,6 +74,8 @@ describe('Event Controller Integration Testing.', function () {
                         res.body.should.have.property('success').eq(true);
                         res.body.should.have.property('data').a('array');
                         res.body.data[0]._id.should.be.eql(eventModel.userId);
+                        res.body.data[0].name.should.be.eql(userModel.name);
+                        res.body.data[0].personalId.should.be.eql(userModel.personalId);
                         res.body.data[0].events[0]._id.should.be.eql(eventModel._id.toString());
                         res.body.data[0].events[0].timeZoneOffset.should.be.eql(eventModel.timeZoneOffset);
                         res.body.data[0].events[0].title.should.be.eql(eventModel.title);

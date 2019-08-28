@@ -2,7 +2,6 @@
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let app = require('../../index');
-let db = require('../../src/config/db');
 let should = chai.should();
 let User = require('../../src/models/user');
 let userTestData = require('../data/user-data');
@@ -21,15 +20,7 @@ describe('Users API Integration Testing.', function () {
     });
 
 
-    after((done) => {
-        // close the db connection
-        db.close(function () {
-            console.log("connection is closed");
-            done();
-            // kill the server
-            // process.exit(0);
-        });
-    });
+
 
 
     /*Case - Valid test api */
@@ -63,7 +54,7 @@ describe('Users API Integration Testing.', function () {
             .send(userTestData.userJson)
             .end((err, res) => {
                 //console.log('Response - ', res.body);
-                res.should.have.status(200);
+                res.should.have.status(201);
                 res.body.should.have.property('success').eq(true);
                 res.body.data.should.be.a('object');
                 res.body.data.should.have.property('_id').a('string');

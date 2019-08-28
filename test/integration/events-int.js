@@ -3,7 +3,6 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let app = require('../../index');
 let should = chai.should();
-let db = require('../../src/config/db');
 let event = require('../../src/models/Events');
 let sampleData = require('../data/event-data');
 
@@ -15,16 +14,6 @@ describe('Event Controller Integration Testing.', function () {
         //Before each test we empty the database
         event.deleteMany({}, () => {
             done();
-        });
-    });
-
-    after((done) => {
-        // close the db connection
-        db.close(function () {
-            console.log("connection is closed");
-            done();
-            // kill the server
-            process.exit(0);
         });
     });
 
@@ -97,7 +86,7 @@ describe('Event Controller Integration Testing.', function () {
                     res.should.have.status(200);
                     res.body.should.have.property('success').eq(true);
                     res.body.should.have.property('data').a('array');
-                     done();
+                    done();
                 });
         });
     });
@@ -115,7 +104,7 @@ describe('Event Controller Integration Testing.', function () {
                     res.should.have.status(200);
                     res.body.should.have.property('success').eq(true);
                     res.body.should.have.property('data').a('array');
-                     done();
+                    done();
                 });
         });
     });

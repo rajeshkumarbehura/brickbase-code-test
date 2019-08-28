@@ -18,7 +18,7 @@
     },
     "scripts": {
         "start": "nodemon index.js",
-        "test": "mocha --recursive",
+        "test": "mocha --recursive --exit",
         "test-with-coverage": "nyc --reporter=text mocha"
     },
     "devDependencies": {
