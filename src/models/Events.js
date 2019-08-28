@@ -16,6 +16,7 @@ const EventSchema = new Schema(
                 lng: {type: Number, required: true},
             },
         },
+        userId: {type: String},
     },
     {
         timestamps: true,

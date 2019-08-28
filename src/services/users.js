@@ -32,7 +32,7 @@ const UserService = {
         //save when user does not exist.
         await userModel.save()
             .then(function (savedUserModel) {
-                responseData = responseDataUtil.create(200, true, "User Created.", savedUserModel);
+                responseData = responseDataUtil.create(201, true, "User Created.", savedUserModel);
             })
             .catch((err) => {
                 console.log(err);
@@ -48,7 +48,7 @@ const UserService = {
     findAllUser: async () => {
         let responseData = null;
         await User.find({})
-            .then(function (users) {
+            .then( function(users) {
                 responseData = responseDataUtil.create(200, true, "Found Users.", users);
             })
             .catch((err) => {
