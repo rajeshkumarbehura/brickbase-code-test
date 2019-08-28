@@ -1,5 +1,4 @@
 const userService = require('../services/users');
-const usersEventsService = require('../services/users-events');
 const responseDataUtil = require('../models/response-data');
 
 const userController = {
@@ -31,17 +30,6 @@ const userController = {
     getOneById: async (request, response) => {
         let responseData = await userService.findOneById(request.params.id);
         responseDataUtil.updateResponse(response, responseData);
-    },
-
-    getUserWithEventById: async (request, response) => {
-        let responseData = await usersEventsService.findEventsByUserId(request.params.id);
-        responseDataUtil.updateResponse(response, responseData);
-    },
-
-    getAllUsersWithEvents: async (request, response) => {
-        console.log("testing here")
-       // let responseData = await usersEventsService.findEventsForAllUser();
-        //responseDataUtil.updateResponse(response, responseData);
     },
 
 };

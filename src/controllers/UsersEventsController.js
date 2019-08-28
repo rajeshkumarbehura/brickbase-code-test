@@ -3,6 +3,12 @@ const responseDataUtil = require('../models/response-data');
 
 const usersEventsController = {
 
+    /**
+     * Get Users events either all or by parameters
+     * @param request
+     * @param response
+     * @returns {Promise<void>}
+     */
     getUserWithEvents: async (request, response) => {
         let responseData = null;
         if (request.query.userId) {
