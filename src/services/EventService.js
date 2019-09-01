@@ -1,8 +1,5 @@
-/**
- *  Write the logic and database crud operation for Event goes here in Service Layer.
- */
-const Event = require('../models/Events');
-const responseDataUtil = require('../models/response-data');
+const Event = require('../models/Event');
+const responseDataUtil = require('../util/ResponseDataUtil');
 
 const EventService = {
 
@@ -11,6 +8,11 @@ const EventService = {
     },
 
 
+    /**
+     * Create a  new Event
+     * @param eventData
+     * @returns {Promise<*>}
+     */
     createEvent: async (eventData) => {
 
         let eventModel = EventService.convertToModel(eventData);
@@ -47,7 +49,10 @@ const EventService = {
         return responseData;
     },
 
-
+    /**
+     * Fetch all Events in System
+     * @returns {Promise<*>}
+     */
     findAllEvents: async () => {
         let responseData = null;
         await Event.find({})
@@ -62,6 +67,10 @@ const EventService = {
     },
 
 
+    /**
+     * Extract request body data and convert into Event model.
+     * @param request
+     */
     convertToModel: (request) => {
         let eventModel = new Event();
 
@@ -81,6 +90,7 @@ const EventService = {
         eventModel.title = request.title;
         eventModel.details = request.details;
         eventModel.location = request.location;
+        eventModel.userId = request.userId;
         return eventModel;
     }
 

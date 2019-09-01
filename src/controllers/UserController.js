@@ -1,5 +1,6 @@
-const userService = require('../services/users');
-const responseDataUtil = require('../models/response-data');
+const userService = require('../services/UserService');
+const responseDataUtil = require('../util/ResponseDataUtil');
+
 
 const userController = {
 
@@ -12,11 +13,23 @@ const userController = {
         });
     },
 
+    /**
+     * Add a user in system.
+     * @param request
+     * @param response
+     * @returns {Promise<void>}
+     */
     addUser: async (request, response) => {
         let responseData = await userService.createUser(request.body);
         responseDataUtil.updateResponse(response, responseData);
     },
 
+    /**
+     * Fetch all users in system.
+     * @param request
+     * @param response
+     * @returns {Promise<void>}
+     */
     getAllUser: async (request, response) => {
         let responseData = null;
         if (request.query.personalId) {
@@ -27,6 +40,12 @@ const userController = {
         responseDataUtil.updateResponse(response, responseData);
     },
 
+    /**
+     * Find a User by userId or _id.
+     * @param request
+     * @param response
+     * @returns {Promise<void>}
+     */
     getOneById: async (request, response) => {
         let responseData = await userService.findOneById(request.params.id);
         responseDataUtil.updateResponse(response, responseData);

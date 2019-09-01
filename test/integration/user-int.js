@@ -3,7 +3,7 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let app = require('../../index');
 let should = chai.should();
-let User = require('../../src/models/user');
+let User = require('../../src/models/User');
 let userTestData = require('../data/user-data');
 
 
@@ -19,16 +19,12 @@ describe('Users API Integration Testing.', function () {
         });
     });
 
-
-
-
-
     /*Case - Valid test api */
     it('GET /api/v1/users/test', (done) => {
         chai.request(app)
             .get('/api/v1/users/test')
             .end((err, res) => {
-                console.log('Response - ', res.body);
+                //console.log('Response - ', res.body);
                 res.should.have.status(200);
                 res.body.should.have.property('success').eq(true);
                 res.body.should.have.property('message').eq('This is test message.');
@@ -42,7 +38,7 @@ describe('Users API Integration Testing.', function () {
             .get('/api/v1/user-testing')
             .end((err, res) => {
                 res.should.have.status(404);
-                console.log('Response - ', res.body);
+                //console.log('Response - ', res.body);
                 done();
             });
     });
@@ -97,7 +93,7 @@ describe('Users API Integration Testing.', function () {
                 chai.request(app)
                     .get('/api/v1/users')
                     .end((err, res) => {
-                        console.log('Response - ', res.body);
+                        //console.log('Response - ', res.body);
                         res.should.have.status(200);
                         res.body.should.have.property('success').eq(true);
                         res.body.should.have.property('data').a('array');
@@ -131,12 +127,12 @@ describe('Users API Integration Testing.', function () {
         userModel.personalId = new Date().getTime();
         userModel.save()
             .then(function (savedUser) {
-                console.log('response - ', savedUser);
+                //console.log('response - ', savedUser);
                 let savedUserId = savedUser._id.toString();
                 chai.request(app)
                     .get('/api/v1/users?personalId=' + savedUser.personalId)
                     .end((err, res) => {
-                        console.log('response - ', res.body);
+                        //console.log('response - ', res.body);
                         res.should.have.status(200);
                         res.body.data[0].should.have.property('_id').a('string');
                         res.body.data[0]._id.should.be.eql(savedUserId);

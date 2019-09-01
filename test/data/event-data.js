@@ -1,4 +1,4 @@
-const Event = require('../../src/models/Events');
+const Event = require('../../src/models/Event');
 
 module.exports = {
 
@@ -13,7 +13,21 @@ module.exports = {
                 "lat": 13.798159498972458,
                 "lng": 100.53689315915108
             }
-        }
+        },
+        "userId": "TEST_USER_1",
+    },
+
+    invalidEventModel: {
+        "end": "August 30, 2019 02:15",
+        "start": "August 30, 2019 23:15",
+        "location": {
+            "address": "1, bangok Street",
+            "latLng": {
+                "lat": 13.798159498972458,
+                "lng": 100.53689315915108
+            }
+        },
+        "userId": "TEST_USER_1",
     },
 
     event: () => {
@@ -30,6 +44,7 @@ module.exports = {
                     "lng": 100.53689315915108
                 }
             },
+            "userId": "TEST_USER_2",
         });
         return event;
     },

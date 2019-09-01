@@ -3,9 +3,8 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let app = require('../../index');
 let should = chai.should();
-let db = require('../../src/config/db');
 
-let User = require('../../src/models/user');
+let User = require('../../src/models/User');
 let userSampleData = require('../data/user-data');
 let eventSampleData = require('../data/event-data');
 
@@ -19,8 +18,6 @@ describe('Event Controller Integration Testing.', function () {
             done();
         });
     });
-
-
 
     it('GET - /api/v1/users-events?userId={}  find events by  User id.', (done) => {
         let userModel = userSampleData.userModel();

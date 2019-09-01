@@ -2,7 +2,7 @@
  *  Write the logic and database crud operation for User goes here in Service Layer.
  */
 const User = require('../models/User');
-const responseDataUtil = require('../models/response-data');
+const responseDataUtil = require('../util/ResponseDataUtil');
 
 const UserService = {
 
@@ -48,7 +48,7 @@ const UserService = {
     findAllUser: async () => {
         let responseData = null;
         await User.find({})
-            .then( function(users) {
+            .then(function (users) {
                 responseData = responseDataUtil.create(200, true, "Found Users.", users);
             })
             .catch((err) => {
@@ -82,16 +82,8 @@ const UserService = {
      * @returns {Promise<*>}
      */
     findByParams: async (personalId) => {
-        let responseData = null;
-        await User.find({personalId: personalId})
-            .then(function (user) {
-                responseData = responseDataUtil.create(200, true, "Found Users.", user);
-            })
-            .catch((err) => {
-                console.log("Error in findAllEvents", err);
-                responseData = responseDataUtil.createDefaultError();
-            });
-        return responseData;
+        let users = await User.find({personalId: personalId});
+        return responseDataUtil.create(200, true, "Found Users.", users);
     },
 
 

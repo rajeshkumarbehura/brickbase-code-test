@@ -1,3 +1,6 @@
+/**
+ *  Handle Response Object either Success or Failure and its convert into proper structure here.
+ */
 const ResponseDataUtil = {
 
     create: (statusCode, success, message) => {

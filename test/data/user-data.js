@@ -1,4 +1,4 @@
-const User = require('../../src/models/user');
+const User = require('../../src/models/User');
 
 module.exports = {
 
@@ -7,6 +7,12 @@ module.exports = {
             "name": "rajesh",
             "contactNo": 9004453,
             "personalId": "1234",
+        },
+
+    invalidUserJson:
+        {
+            "name": "rajesh",
+            "contactNo": 9004453,
         },
 
 

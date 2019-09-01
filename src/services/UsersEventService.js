@@ -2,8 +2,8 @@
  *  Write the logic and database crud operation for User and Events goes here in Service Layer.
  */
 let User = require('../models/User');
-let Event = require('../../src/models/Events');
-let responseDataUtil = require('../models/response-data');
+let Event = require('../models/Event');
+const responseDataUtil = require('../util/ResponseDataUtil');
 
 
 const UsersEventsService = {

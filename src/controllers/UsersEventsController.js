@@ -1,5 +1,6 @@
-const usersEventsService = require('../services/users-events');
-const responseDataUtil = require('../models/response-data');
+const usersEventsService = require('../services/UsersEventService'); 
+const responseDataUtil = require('../util/ResponseDataUtil');
+
 
 const usersEventsController = {
 
